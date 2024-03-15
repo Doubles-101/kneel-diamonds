@@ -1,12 +1,35 @@
+// Changes the transientstate
+import { setMetalChoice } from "./TransientState.js"
+
+const handleMetalChoice = (event) => {
+
+    if (event.target.name === "metal") {
+        setMetalChoice(parseInt(event.target.value))
+    }
+}
+
+
+
 export const MetalOptions = async () => {
     const response = await fetch("http://localhost:8088/metals")
     const metals = await response.json()
 
-    let html = "<ul>"
-    for (const metal of metals) {
-        html += `<li data-pk="${metal.id}">${metal.metal}</li>`
-    }
-    html += "</ul>"
+    let optionsHTML = "<h2>Metals</h2>"
 
-    return html
+    // Use map() to generate new array of strings
+    const divStringArray = metals.map(
+        (metal) => {
+          return `<div>
+              <input type='radio' name='metal' value='${metal.id}' /> ${metal.metal}
+          </div>`
+        }
+    )
+
+    // This function needs to return a single string, not an array of strings
+    optionsHTML += divStringArray.join("")
+
+    return optionsHTML
 }
+
+
+document.addEventListener("change", handleMetalChoice)
