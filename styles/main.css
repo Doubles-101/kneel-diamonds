@@ -1,0 +1,10 @@
+.choices {
+    display: flex;
+    justify-content: space-around;
+}
+
+.options {
+    flex-basis: 25%;
+    border: 1px solid gray;
+    margin-bottom: 20px;
+}
