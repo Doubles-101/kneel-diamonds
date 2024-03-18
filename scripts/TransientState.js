@@ -19,3 +19,22 @@ export const setSizeChoice = (chosenSize) => {
     transientState.sizeId = chosenSize
     console.log(transientState)
 }
+
+// Puts transient state into permanent
+export const placeOrder = async () => {
+    
+    const postOptions = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(transientState)
+    }
+
+    // Send the transient state to your API
+    const response = await fetch("http://localhost:8088/orders", postOptions)
+
+    const customEvent = new CustomEvent("newOrderCreated")
+    document.dispatchEvent(customEvent)
+
+}
